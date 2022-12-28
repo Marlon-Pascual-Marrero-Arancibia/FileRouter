@@ -1,0 +1,29 @@
+﻿<Window x:Class="FileRouter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FileRouter"
+        mc:Ignorable="d"
+        Title="FileRouter" Height="450" Width="800">
+    <Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to Scan" VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to ReRoute To " VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
+                
+            </StackPanel>
+            
+            <Line Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"  Stroke="Black" StrokeThickness="4" Y1="0" Y2="600" Margin="0,0,0,0"></Line>
+            
+            
+        </Grid>
+    </Grid>
+</Window>
