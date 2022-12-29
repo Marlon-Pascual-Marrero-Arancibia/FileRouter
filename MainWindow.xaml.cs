@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Forms;
 
 namespace FileRouter
 {
@@ -23,6 +14,28 @@ namespace FileRouter
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
+            var result = openFolderDialog.ShowDialog();
+            var folder_path = openFolderDialog.SelectedPath.ToString();
+
+            var item = new TreeViewItem();
+            item.Header = folder_path;
+
+            if (result == System.Windows.Forms.DialogResult.OK && isScannedFolder(folder_path))
+            {
+                ScannedFolders.Items.Add(item);
+            }
+        }
+
+        // This function should check if the folder selected is already being scanned.
+        // Alert the user if the folder selected is already being scanned.
+        public bool isScannedFolder(string folder_path)
+        {
+            return true;
         }
     }
 }
