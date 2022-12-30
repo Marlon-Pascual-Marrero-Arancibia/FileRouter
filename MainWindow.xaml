@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:FileRouter"
         mc:Ignorable="d"
         Title="FileRouter" Height="450" Width="800">
-    <Grid>
+    <StackPanel x:Name="TopLevelGrid">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
-            <!-- Make Stack Panels resizeable horizontally -->
+            <GridSplitter Grid.Column="0" Width="10" Background="Black"/>
+            <!-- Left side stack panel-->
             <StackPanel Grid.Column="0">
                 <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to Scan" VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
-                <TreeView x:Name="ScannedFolders" RenderTransformOrigin="0.5,0.5" Height="100">
+                <TreeView x:Name="ScannedFolders" Margin="0,0,10,0">
                     <TreeView.Resources>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="HeaderTemplate">
@@ -31,12 +31,31 @@
                         </Style>
                     </TreeView.Resources>
                 </TreeView>
-                <Button Content="Add Folder" Click="Button_Click"/>
+                <Button Content="Add Folder" Click="AddScanningFolder" Margin="0,0,10,0"/>
             </StackPanel>
+            <!-- Right side stack panel-->
             <StackPanel Grid.Column="1">
                 <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to ReRoute To " VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
+                <StackPanel>
+                    <TreeView x:Name="RoutingFolders">
+                        <TreeView.Resources>
+                            <Style TargetType="{x:Type TreeViewItem}">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TreeView.Resources>
+                    </TreeView>
+                    <Button Content="Add Folder" Click="AddRoutingFolder" Margin="0,0,10,0"/>
+                </StackPanel>
             </StackPanel>
-            <Line Grid.Column="2" Grid.Row="1" Grid.RowSpan="2"  Stroke="Black" StrokeThickness="4" Y1="0" Y2="600" Margin="0,0,0,0"></Line>
         </Grid>
-    </Grid>
+        <Button Content="Route The Files!"/>
+    </StackPanel>
 </Window>

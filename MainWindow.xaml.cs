@@ -3,6 +3,8 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Windows.Navigation;
+using System.Windows.Shell;
 
 namespace FileRouter
 {
@@ -14,28 +16,61 @@ namespace FileRouter
         public MainWindow()
         {
             InitializeComponent();
+            this.SizeChanged += OnWindowSizeChanged;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            double newWindowHeight = e.NewSize.Height;
+            double newWindowWidth = e.NewSize.Width;
+            double prevWindowHeight = e.PreviousSize.Height;
+            double prevWindowWidth = e.PreviousSize.Width;
+
+            TopLevelGrid.Height = newWindowHeight-100;
+        }
+
+        private void AddFolder(System.Windows.Controls.TreeView TreeView)
         {
             FolderBrowserDialog openFolderDialog = new FolderBrowserDialog();
+            
             var result = openFolderDialog.ShowDialog();
-            var folder_path = openFolderDialog.SelectedPath.ToString();
 
-            var item = new TreeViewItem();
-            item.Header = folder_path;
-
-            if (result == System.Windows.Forms.DialogResult.OK && isScannedFolder(folder_path))
+            if (result != System.Windows.Forms.DialogResult.OK) 
             {
-                ScannedFolders.Items.Add(item);
+                System.Windows.MessageBox.Show("No Folder Selected");
+            }
+            else
+            {
+                var item = new TreeViewItem();
+                item.Header = openFolderDialog.SelectedPath.ToString();
+                if (!IsInTreeView(TreeView, item))
+                {
+                    TreeView.Items.Add(item);
+                }
             }
         }
 
-        // This function should check if the folder selected is already being scanned.
-        // Alert the user if the folder selected is already being scanned.
-        public bool isScannedFolder(string folder_path)
+        private void AddScanningFolder(object sender, RoutedEventArgs e)
         {
-            return true;
+            AddFolder(ScannedFolders);
+        }
+
+        private void AddRoutingFolder(object sender, RoutedEventArgs e)
+        {
+            AddFolder(RoutingFolders);
+        }
+
+        public bool IsInTreeView(System.Windows.Controls.TreeView TreeView, TreeViewItem new_item)
+        {
+            foreach (TreeViewItem item in TreeView.Items)
+            {
+                if ((string)item.Header == (string)new_item.Header)
+                {
+                    MessageBoxResult result = System.Windows.MessageBox.Show("Whoops, you are already scanning: " + new_item.Header);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
