@@ -1,10 +1,6 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Navigation;
-using System.Windows.Shell;
 
 namespace FileRouter
 {
