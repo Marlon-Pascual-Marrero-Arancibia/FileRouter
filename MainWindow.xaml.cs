@@ -18,15 +18,12 @@ namespace FileRouter
             InitializeComponent();
             this.SizeChanged += OnWindowSizeChanged;
         }
-
         protected void OnWindowSizeChanged(object sender, SizeChangedEventArgs e)
         {
             double newWindowHeight = e.NewSize.Height;
-            double newWindowWidth = e.NewSize.Width;
-            double prevWindowHeight = e.PreviousSize.Height;
-            double prevWindowWidth = e.PreviousSize.Width;
-
-            TopLevelGrid.Height = newWindowHeight-100;
+            Thickness margin = ProgramButtons.Margin;
+            margin.Top = newWindowHeight-166;
+            ProgramButtons.Margin = margin;
         }
 
         private void AddFolder(System.Windows.Controls.TreeView TreeView)
@@ -52,12 +49,13 @@ namespace FileRouter
 
         private void AddScanningFolder(object sender, RoutedEventArgs e)
         {
-            AddFolder(ScannedFolders);
+            AddFolder(scanning);
         }
 
+        // Add a Text Box Under Each Folder Added to let the user secify which file extensions should enter the folder above.
         private void AddRoutingFolder(object sender, RoutedEventArgs e)
         {
-            AddFolder(RoutingFolders);
+            AddFolder(routing);
         }
 
         public bool IsInTreeView(System.Windows.Controls.TreeView TreeView, TreeViewItem new_item)
@@ -65,8 +63,8 @@ namespace FileRouter
             foreach (TreeViewItem item in TreeView.Items)
             {
                 if ((string)item.Header == (string)new_item.Header)
-                {
-                    MessageBoxResult result = System.Windows.MessageBox.Show("Whoops, you are already scanning: " + new_item.Header);
+                { 
+                    MessageBoxResult result = System.Windows.MessageBox.Show("Whoops, you are already "+TreeView.Name+" the folder at:  "+new_item.Header);
                     return true;
                 }
             }

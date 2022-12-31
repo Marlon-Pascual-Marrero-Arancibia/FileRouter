@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:FileRouter"
         mc:Ignorable="d"
         Title="FileRouter" Height="450" Width="800">
-    <StackPanel x:Name="TopLevelGrid">
-        <Grid>
+    <StackPanel>
+        <Grid x:Name="FoldersGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GridSplitter Grid.Column="0" Width="10" Background="Black"/>
+            <GridSplitter Grid.Column="0" Width="5" Background="#dddddd" HorizontalAlignment="Right"/>
+            <GridSplitter Grid.Column="1" Width="5" Background="#dddddd" HorizontalAlignment="Left" />
             <!-- Left side stack panel-->
-            <StackPanel Grid.Column="0">
-                <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to Scan" VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
-                <TreeView x:Name="ScannedFolders" Margin="0,0,10,0">
+            <StackPanel Grid.Column="0" >
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Folders to Scan" VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
+                <TreeView x:Name="scanning" Margin="15">
                     <TreeView.Resources>
                         <Style TargetType="{x:Type TreeViewItem}">
                             <Setter Property="HeaderTemplate">
@@ -31,13 +32,13 @@
                         </Style>
                     </TreeView.Resources>
                 </TreeView>
-                <Button Content="Add Folder" Click="AddScanningFolder" Margin="0,0,10,0"/>
+                <Button Margin="15" Content="Add Folder" Click="AddScanningFolder"/>
             </StackPanel>
             <!-- Right side stack panel-->
-            <StackPanel Grid.Column="1">
-                <TextBlock HorizontalAlignment="Center" Margin="0,19,0,0" TextWrapping="Wrap" Text="Folders to ReRoute To " VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
+            <StackPanel Grid.Column="2">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Folders to ReRoute To " VerticalAlignment="Top" FontSize="20" FontFamily="SimSun"/>
                 <StackPanel>
-                    <TreeView x:Name="RoutingFolders">
+                    <TreeView x:Name="routing" Margin="15">
                         <TreeView.Resources>
                             <Style TargetType="{x:Type TreeViewItem}">
                                 <Setter Property="HeaderTemplate">
@@ -45,6 +46,7 @@
                                         <DataTemplate>
                                             <StackPanel>
                                                 <TextBlock Text="{Binding}"/>
+                                                <TextBox AcceptsReturn="True" TextWrapping="Wrap" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </Setter.Value>
@@ -52,10 +54,19 @@
                             </Style>
                         </TreeView.Resources>
                     </TreeView>
-                    <Button Content="Add Folder" Click="AddRoutingFolder" Margin="0,0,10,0"/>
+                    <Button  Content="Add Folder" Click="AddRoutingFolder" Margin="15"/>
                 </StackPanel>
             </StackPanel>
+        </Grid >
+        <Grid x:Name="ProgramButtons" Margin="0,307,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Export Current Settings"/>
+            <Button Grid.Column="1" Content="Import new Settings"/>
+            <Button Grid.Column="2" Content="Route The Files!"/>
         </Grid>
-        <Button Content="Route The Files!"/>
     </StackPanel>
 </Window>
